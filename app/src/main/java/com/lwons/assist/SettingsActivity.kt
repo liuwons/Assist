@@ -1,8 +1,6 @@
 package com.lwons.assist
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.lwons.assist.ui.theme.AssistTheme
 
-class MainActivity : ComponentActivity() {
+class SettingsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,12 +22,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-        if (!PermissionUtils.isAccessibilityServiceEnabled(this)) {
-            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-        } else {
-            startService(Intent(this, AssistAccessibilityService::class.java))
-        }
     }
 }
-
