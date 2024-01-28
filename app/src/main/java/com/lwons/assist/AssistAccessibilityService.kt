@@ -2,11 +2,11 @@ package com.lwons.assist
 
 import android.accessibilityservice.AccessibilityService
 import android.graphics.PixelFormat
+import android.graphics.Point
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import androidx.compose.material3.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -16,11 +16,23 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.lwons.assist.pref.GlobalPreferences
+import com.lwons.assist.touch.Entry
 
 class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, SavedStateRegistryOwner {
 
+    companion object {
+        private const val PREF_KEY_POSITION_X = "position_x"
+        private const val PREF_KEY_POSITION_Y = "position_y"
+
+        private const val DEFAULT_POSITION_X = -1
+        private const val DEFAULT_POSITION_Y = -1
+    }
+
     private val lifecycleRegistry = LifecycleRegistry(this)
     private var savedStateRegistryController: SavedStateRegistryController = SavedStateRegistryController.create(this)
+
+    private var position: Point = Point(DEFAULT_POSITION_X, DEFAULT_POSITION_Y)
 
     override fun onServiceConnected() {
         Log.i("AssistAccessibilityService", "onServiceConnected")
@@ -28,22 +40,18 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
 
         val composeView = ComposeView(context = this)
         composeView.setContent {
-            Text("Assist")
+            Entry(onRequestTranslate = { dx, dy ->
+                Log.i("AssistAccessibilityService", "onRequestTranslate: $dx, $dy")
+                position.x += dx
+                position.y += dy
+                windowManager.updateViewLayout(composeView, getLayoutParams())
+            }, onRequestFinished = {
+                GlobalPreferences.saveInt(PREF_KEY_POSITION_X, position.x)
+                GlobalPreferences.saveInt(PREF_KEY_POSITION_Y, position.y)
+            })
         }
 
-        val layoutParams = WindowManager.LayoutParams()
-        layoutParams.apply {
-            y = 500
-            x = 400
-            width = 300
-            height = 300
-            type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
-            gravity = Gravity.TOP or Gravity.LEFT
-            format = PixelFormat.TRANSPARENT
-            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-        }
-
-        windowManager.addView(composeView, layoutParams)
+        windowManager.addView(composeView, getLayoutParams())
         composeView.setViewTreeLifecycleOwner(this)
         composeView.setViewTreeSavedStateRegistryOwner(this)
     }
@@ -61,6 +69,17 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
         savedStateRegistryController.performRestore(null)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
         Log.i("AssistAccessibilityService", "onCreate")
+
+        position = Point(GlobalPreferences.loadInt(PREF_KEY_POSITION_X, DEFAULT_POSITION_X),
+            GlobalPreferences.loadInt(PREF_KEY_POSITION_Y, DEFAULT_POSITION_Y))
+
+        if (position.x == DEFAULT_POSITION_X || position.y == DEFAULT_POSITION_Y) {
+            val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+            val display = windowManager.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+            position = Point(size.x / 2, size.y / 2)
+        }
     }
 
     override fun onDestroy() {
@@ -73,4 +92,18 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
         get() = lifecycleRegistry
     override val savedStateRegistry: SavedStateRegistry
         get() = savedStateRegistryController.savedStateRegistry
+
+    private fun getLayoutParams(): WindowManager.LayoutParams {
+        return WindowManager.LayoutParams().apply {
+            x = position.x
+            y = position.y
+            width = WindowManager.LayoutParams.WRAP_CONTENT
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+            type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
+            gravity = Gravity.TOP or Gravity.START
+            format = PixelFormat.TRANSPARENT
+            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        }
+    }
+
 }
