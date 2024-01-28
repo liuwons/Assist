@@ -7,13 +7,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import kotlin.math.min
+
+private const val PANEL_MAX_SIZE_DP = 360
 
 @Composable
 fun Panel(dismissListener: () -> Unit) {
@@ -22,9 +28,13 @@ fun Panel(dismissListener: () -> Unit) {
         .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
             dismissListener() }) {
 
+        val configuration = LocalConfiguration.current
+        val panelSizeDp = min(PANEL_MAX_SIZE_DP, min(configuration.screenWidthDp, configuration.screenHeightDp) * 3 / 4)
+
         Box(modifier = Modifier
-            .width(100.dp)
-            .height(100.dp)
+            .width(panelSizeDp.dp)
+            .height(panelSizeDp.dp)
+            .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.background)
             .clickable { }) {
             Text(text = "Assist")
