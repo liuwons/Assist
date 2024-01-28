@@ -5,9 +5,9 @@ import android.content.Intent
 
 
 class HomeActionImpl(private val context: Context): IActionImpl {
-    override fun execute(action: AssistAction) {
+    override fun execute(action: Action) {
         when (action) {
-            AssistAction.ACTION_HOME -> {
+            Action.ACTION_HOME -> {
                 context.startActivity(Intent(Intent.ACTION_MAIN).apply {
                     addCategory(Intent.CATEGORY_HOME)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK

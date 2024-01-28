@@ -2,8 +2,8 @@ package com.lwons.assist
 
 import android.app.Application
 import android.util.Log
+import com.lwons.assist.action.Action
 import com.lwons.assist.action.ActionExecutor
-import com.lwons.assist.action.AssistAction
 import com.lwons.assist.action.HomeActionImpl
 import com.lwons.assist.action.SettingsActionImpl
 import com.lwons.assist.pref.DefaultPreferences
@@ -15,8 +15,8 @@ class AssistApplication : Application() {
         Log.i("AssistApplication", "onCreate")
         GlobalPreferences.init(DefaultPreferences(this))
         ActionExecutor.run {
-            register(AssistAction.ACTION_HOME, HomeActionImpl(this@AssistApplication))
-            register(AssistAction.ACTION_SETTINGS, SettingsActionImpl(this@AssistApplication))
+            register(Action.ACTION_HOME, HomeActionImpl(this@AssistApplication))
+            register(Action.ACTION_SETTINGS, SettingsActionImpl(this@AssistApplication))
         }
     }
 }

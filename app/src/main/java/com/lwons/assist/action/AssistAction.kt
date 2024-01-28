@@ -1,6 +1,7 @@
 package com.lwons.assist.action
 
-enum class AssistAction {
+enum class Action {
+    ACTION_NONE,
     ACTION_HOME,
     ACTION_SETTINGS,
     ACTION_SCREENSHOT,
@@ -29,3 +30,5 @@ enum class AssistAction {
     ACTION_DEV_SHOW_GPU_VIEW_UPDATES,
     ACTION_DEV_WIRELESS_DEBUGGING,
 }
+
+data class AssistAction(val action: Action, val icon: Int, val name: String)

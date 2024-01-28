@@ -2,13 +2,13 @@ package com.lwons.assist.action
 
 object ActionExecutor {
 
-    private val actionImplMap = mutableMapOf<AssistAction, IActionImpl>()
+    private val actionImplMap = mutableMapOf<Action, IActionImpl>()
 
-    fun register(action: AssistAction, impl: IActionImpl) {
+    fun register(action: Action, impl: IActionImpl) {
         actionImplMap[action] = impl
     }
 
-    fun execute(action: AssistAction) {
+    fun execute(action: Action) {
         actionImplMap[action]?.execute(action)
     }
 }
