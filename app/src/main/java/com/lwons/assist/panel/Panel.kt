@@ -17,12 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.lwons.assist.action.AssistAction
 import kotlin.math.min
 
 private const val PANEL_MAX_SIZE_DP = 360
 
 @Composable
-fun Panel(dismissListener: () -> Unit) {
+fun Panel(dismissListener: () -> Unit, actionListener: (AssistAction) -> Unit) {
     Box(contentAlignment = Alignment.Center, modifier = Modifier
         .fillMaxSize()
         .clickable(indication = null, interactionSource = remember { MutableInteractionSource() }) {
@@ -37,8 +38,7 @@ fun Panel(dismissListener: () -> Unit) {
             .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.background)
             .clickable { }) {
-            Text(text = "Assist")
+            Text(text = "Home", modifier = Modifier.clickable { actionListener(AssistAction.ACTION_HOME) })
         }
-
     }
 }

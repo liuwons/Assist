@@ -21,6 +21,7 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.lwons.assist.action.ActionExecutor
 import com.lwons.assist.bubble.Bubble
 import com.lwons.assist.pref.GlobalPreferences
 import com.lwons.assist.panel.Panel
@@ -123,6 +124,9 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
         panelComposeView.setContent {
             Panel(dismissListener = {
                 hidePanel()
+            }, actionListener = { action ->
+                hidePanel()
+                ActionExecutor.execute(action)
             })
         }
         windowManager.addView(panelComposeView, WindowManager.LayoutParams().apply {
