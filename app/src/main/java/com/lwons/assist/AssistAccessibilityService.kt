@@ -59,7 +59,7 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
     override fun onCreate() {
         super.onCreate()
         savedStateRegistryController.performRestore(null)
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
         Log.i("AssistAccessibilityService", "onCreate")
     }
 
