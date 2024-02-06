@@ -10,7 +10,7 @@ object ActionConfiguration {
     fun init(context: Context) {
         displayActions.add(AssistAction(Action.ACTION_HOME, R.drawable.home, "Home"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
+        displayActions.add(AssistAction(Action.ACTION_DEVELOPER_OPTIONS, R.drawable.code, "Settings"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))

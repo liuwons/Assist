@@ -5,6 +5,7 @@ import android.util.Log
 import com.lwons.assist.action.Action
 import com.lwons.assist.action.ActionConfiguration
 import com.lwons.assist.action.ActionExecutor
+import com.lwons.assist.action.DeveloperActionImpl
 import com.lwons.assist.action.HomeActionImpl
 import com.lwons.assist.action.SettingsActionImpl
 import com.lwons.assist.pref.DefaultPreferences
@@ -18,6 +19,7 @@ class AssistApplication : Application() {
         ActionExecutor.run {
             register(Action.ACTION_HOME, HomeActionImpl(this@AssistApplication))
             register(Action.ACTION_SETTINGS, SettingsActionImpl(this@AssistApplication))
+            register(Action.ACTION_DEVELOPER_OPTIONS, DeveloperActionImpl(this@AssistApplication))
         }
         ActionConfiguration.init(this)
     }
