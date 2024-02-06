@@ -1,6 +1,7 @@
 package com.lwons.assist
 
 import android.accessibilityservice.AccessibilityService
+import android.annotation.SuppressLint
 import android.graphics.PixelFormat
 import android.graphics.Point
 import android.util.Log
@@ -8,11 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -22,9 +19,9 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.lwons.assist.action.ActionExecutor
-import com.lwons.assist.bubble.Bubble
-import com.lwons.assist.pref.GlobalPreferences
 import com.lwons.assist.panel.Panel
+import com.lwons.assist.pref.GlobalPreferences
+import com.lwons.assist.widget.BubbleViewImpl
 
 class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, SavedStateRegistryOwner {
 
@@ -37,37 +34,36 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
     }
 
     private var panelView: View? = null
+    private var bubbleView: View? = null
 
     private val lifecycleRegistry = LifecycleRegistry(this)
     private var savedStateRegistryController: SavedStateRegistryController = SavedStateRegistryController.create(this)
 
     private var position: Point = Point(DEFAULT_POSITION_X, DEFAULT_POSITION_Y)
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onServiceConnected() {
         Log.i("AssistAccessibilityService", "onServiceConnected")
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
-        val bubbleComposeView = ComposeView(context = this)
-        bubbleComposeView.setContent {
-            Bubble(onRequestTranslate = { dx, dy ->
-                Log.i("AssistAccessibilityService", "onRequestTranslate: $dx, $dy")
+        bubbleView = BubbleViewImpl(onRequestTranslate = { dx, dy ->
+            Log.i("AssistAccessibilityService", "onRequestTranslate: $dx, $dy")
+            bubbleView?.let { v ->
                 position.x += dx
                 position.y += dy
-                windowManager.updateViewLayout(bubbleComposeView, getLayoutParams())
-            }, onRequestFinished = {
-                GlobalPreferences.saveInt(PREF_KEY_POSITION_X, position.x)
-                GlobalPreferences.saveInt(PREF_KEY_POSITION_Y, position.y)
-            }, onClick = {
-                if (!panelVisible()) {
-                    showPanel()
-                }
-                Log.i("AssistAccessibilityService", "onClick")
-            }, modifier = Modifier.width(64.dp).height(64.dp))
-        }
+                windowManager.updateViewLayout(v, getLayoutParams())
+            }
+        }, onRequestFinished = {
+            GlobalPreferences.saveInt(PREF_KEY_POSITION_X, position.x)
+            GlobalPreferences.saveInt(PREF_KEY_POSITION_Y, position.y)
+        }, onClick = {
+            if (!panelVisible()) {
+                showPanel()
+            }
+            Log.i("AssistAccessibilityService", "onClick")
+        }).createView(this)
 
-        windowManager.addView(bubbleComposeView, getLayoutParams())
-        bubbleComposeView.setViewTreeLifecycleOwner(this)
-        bubbleComposeView.setViewTreeSavedStateRegistryOwner(this)
+        windowManager.addView(bubbleView, getLayoutParams())
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -157,10 +153,11 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
 
     private fun getLayoutParams(): WindowManager.LayoutParams {
         return WindowManager.LayoutParams().apply {
+            val size = resources.getDimensionPixelSize(R.dimen.bubble_size)
             x = position.x
             y = position.y
-            width = WindowManager.LayoutParams.WRAP_CONTENT
-            height = WindowManager.LayoutParams.WRAP_CONTENT
+            width = size
+            height = size
             type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
             gravity = Gravity.TOP or Gravity.START
             format = PixelFormat.TRANSPARENT
