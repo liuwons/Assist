@@ -14,7 +14,7 @@ object ActionConfiguration {
         displayActions.add(AssistAction(Action.ACTION_VOLUME_UP, R.drawable.volume_up, "Volume Up"))
         displayActions.add(AssistAction(Action.ACTION_VOLUME_DOWN, R.drawable.volume_down, "Volume Down"))
         displayActions.add(AssistAction(Action.ACTION_ROTATION, R.drawable.screen_rotation, "Screen Rotation"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
+        displayActions.add(AssistAction(Action.ACTION_BLUETOOTH, R.drawable.bluetooth, "Bluetooth"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
         displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
