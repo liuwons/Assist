@@ -7,6 +7,7 @@ import com.lwons.assist.action.ActionConfiguration
 import com.lwons.assist.action.ActionExecutor
 import com.lwons.assist.action.DeveloperActionImpl
 import com.lwons.assist.action.HomeActionImpl
+import com.lwons.assist.action.RotationActionImpl
 import com.lwons.assist.action.SettingsActionImpl
 import com.lwons.assist.action.VolumeActionImpl
 import com.lwons.assist.pref.DefaultPreferences
@@ -23,6 +24,7 @@ class AssistApplication : Application() {
             register(Action.ACTION_DEVELOPER_OPTIONS, DeveloperActionImpl(this@AssistApplication))
             register(Action.ACTION_VOLUME_UP, VolumeActionImpl(this@AssistApplication))
             register(Action.ACTION_VOLUME_DOWN, VolumeActionImpl(this@AssistApplication))
+            register(Action.ACTION_ROTATION, RotationActionImpl(this@AssistApplication))
         }
         ActionConfiguration.init(this)
     }
