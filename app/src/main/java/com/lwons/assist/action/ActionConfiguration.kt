@@ -8,18 +8,18 @@ object ActionConfiguration {
     val displayActions = mutableListOf<AssistAction>()
 
     fun init(context: Context) {
-        displayActions.add(AssistAction(Action.ACTION_HOME, R.drawable.home, "Home"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_DEVELOPER_OPTIONS, R.drawable.code, "Developer Options"))
-        displayActions.add(AssistAction(Action.ACTION_VOLUME_UP, R.drawable.volume_up, "Volume Up"))
-        displayActions.add(AssistAction(Action.ACTION_VOLUME_DOWN, R.drawable.volume_down, "Volume Down"))
-        displayActions.add(AssistAction(Action.ACTION_ROTATION, R.drawable.screen_rotation, "Screen Rotation"))
-        displayActions.add(AssistAction(Action.ACTION_BLUETOOTH, R.drawable.bluetooth, "Bluetooth"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
-        displayActions.add(AssistAction(Action.ACTION_SETTINGS, R.drawable.settings, "Settings"))
+        displayActions.add(AssistAction(Action.ACTION_HOME, "Home") { R.drawable.home })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
+        displayActions.add(AssistAction(Action.ACTION_DEVELOPER_OPTIONS, "Developer Options") { R.drawable.code })
+        displayActions.add(AssistAction(Action.ACTION_VOLUME_UP, "Volume Up") { R.drawable.volume_up })
+        displayActions.add(AssistAction(Action.ACTION_VOLUME_DOWN, "Volume Down") { R.drawable.volume_down })
+        displayActions.add(AssistAction(Action.ACTION_ROTATION, "Screen Rotation") { R.drawable.screen_rotation })
+        displayActions.add(AssistAction(Action.ACTION_BLUETOOTH, "Bluetooth") { state -> if (state == 1) R.drawable.bluetooth else R.drawable.bluetooth_disabled })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
+        displayActions.add(AssistAction(Action.ACTION_SETTINGS, "Settings") { R.drawable.settings })
     }
 
 }

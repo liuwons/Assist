@@ -31,4 +31,4 @@ enum class Action {
     ACTION_DEV_WIRELESS_DEBUGGING,
 }
 
-data class AssistAction(val action: Action, val icon: Int, val name: String)
+data class AssistAction(val action: Action, val name: String, val icon: (Int) -> Int)

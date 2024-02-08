@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 @Composable
 fun ActionItem(action: AssistAction, modifier: Modifier = Modifier) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(painterResource(id = action.icon), contentDescription = action.name, modifier = modifier)
+        Icon(painterResource(id = action.icon(ActionExecutor.state(action.action).value)), contentDescription = action.name, modifier = modifier)
         Text(text = action.name)
     }
 }

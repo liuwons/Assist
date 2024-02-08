@@ -77,7 +77,7 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
     override fun onCreate() {
         super.onCreate()
         savedStateRegistryController.performRestore(null)
-        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         Log.i("AssistAccessibilityService", "onCreate")
 
         position = Point(GlobalPreferences.loadInt(PREF_KEY_POSITION_X, DEFAULT_POSITION_X),

@@ -47,8 +47,7 @@ fun Panel(dismissListener: () -> Unit, actionListener: (Action) -> Unit) {
                 Row(modifier = Modifier.weight(1.0f)) {
                     for (j in 0 until GRID_SIZE) {
                         val action = ActionConfiguration.displayActions[i * GRID_SIZE + j]
-                        ActionItem(action = action,
-                            Modifier.weight(1.0f).clickable { actionListener(action.action) })
+                        ActionItem(action, Modifier.weight(1.0f).clickable { actionListener(action.action) })
                     }
                 }
             }
