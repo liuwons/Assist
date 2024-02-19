@@ -90,10 +90,13 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
             display.getSize(size)
             position = Point(size.x / 2, size.y / 2)
         }
+
+        GlobalService.init(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        GlobalService.destroy()
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         Log.i("AssistAccessibilityService", "onDestroy")
     }

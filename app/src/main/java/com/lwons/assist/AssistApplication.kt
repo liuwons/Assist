@@ -1,5 +1,6 @@
 package com.lwons.assist
 
+import android.accessibilityservice.AccessibilityService
 import android.app.Application
 import android.util.Log
 import com.lwons.assist.action.Action
@@ -7,6 +8,7 @@ import com.lwons.assist.action.ActionConfiguration
 import com.lwons.assist.action.ActionExecutor
 import com.lwons.assist.action.BluetoothActionImpl
 import com.lwons.assist.action.DeveloperActionImpl
+import com.lwons.assist.action.GlobalActionImpl
 import com.lwons.assist.action.HomeActionImpl
 import com.lwons.assist.action.RotationActionImpl
 import com.lwons.assist.action.SettingsActionImpl
@@ -28,6 +30,8 @@ class AssistApplication : Application() {
             register(Action.ACTION_VOLUME_DOWN, VolumeDownActionImpl(this@AssistApplication))
             register(Action.ACTION_ROTATION, RotationActionImpl(this@AssistApplication))
             register(Action.ACTION_BLUETOOTH, BluetoothActionImpl(this@AssistApplication))
+            register(Action.ACTION_RECENT, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_RECENTS))
+            register(Action.ACTION_LOCK, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN))
         }
         ActionConfiguration.init(this)
     }
