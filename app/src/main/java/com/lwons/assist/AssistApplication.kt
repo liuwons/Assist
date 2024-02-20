@@ -32,6 +32,7 @@ class AssistApplication : Application() {
             register(Action.ACTION_BLUETOOTH, BluetoothActionImpl(this@AssistApplication))
             register(Action.ACTION_RECENT, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_RECENTS))
             register(Action.ACTION_LOCK, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN))
+            register(Action.ACTION_SCREENSHOT, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT))
         }
         ActionConfiguration.init(this)
     }
