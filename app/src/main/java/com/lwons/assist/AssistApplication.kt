@@ -33,6 +33,8 @@ class AssistApplication : Application() {
             register(Action.ACTION_RECENT, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_RECENTS))
             register(Action.ACTION_LOCK, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN))
             register(Action.ACTION_SCREENSHOT, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT))
+            register(Action.ACTION_POWER, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_POWER_DIALOG))
+            register(Action.ACTION_BACK, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_BACK))
         }
         ActionConfiguration.init(this)
     }
