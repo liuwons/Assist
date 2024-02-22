@@ -31,7 +31,7 @@ class BubbleViewImpl(val onRequestTranslate: (Int, Int) -> Unit,
     @SuppressLint("ClickableViewAccessibility")
     fun createView(context: Context): View {
         return View(context).apply {
-            background = context.resources.getDrawable(R.drawable.ic_bubble)
+            background = context.resources.getDrawable(R.drawable.ic_bubble_round)
             alpha = ALPHA_INACTIVE
             setOnTouchListener { _, event ->
                 event?.let {
