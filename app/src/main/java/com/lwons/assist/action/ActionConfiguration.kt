@@ -16,6 +16,7 @@ object ActionConfiguration {
         displayActions.add(AssistAction(Action.ACTION_SCREENSHOT, "Screenshot") { R.drawable.screenshot })
         displayActions.add(AssistAction(Action.ACTION_BACK, "Back") { R.drawable.arrow_back })
         displayActions.add(AssistAction(Action.ACTION_POWER, "Power") { R.drawable.power_settings_new })
+        displayActions.add(AssistAction(Action.ACTION_NOTIFICATION, "Notification") { R.drawable.notifications })
         displayActions.add(AssistAction(Action.ACTION_ROTATION, "Screen Rotation") { R.drawable.screen_rotation })
         displayActions.add(AssistAction(Action.ACTION_BLUETOOTH, "Bluetooth") { state -> if (state == 1) R.drawable.bluetooth else R.drawable.bluetooth_disabled })
         displayActions.add(AssistAction(Action.ACTION_VOLUME_UP, "Volume Up") { R.drawable.volume_up })
