@@ -36,6 +36,7 @@ class AssistApplication : Application() {
             register(Action.ACTION_POWER, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_POWER_DIALOG))
             register(Action.ACTION_BACK, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_BACK))
             register(Action.ACTION_NOTIFICATION, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS))
+            register(Action.ACTION_QUICK_SETTINGS, GlobalActionImpl(this@AssistApplication, AccessibilityService.GLOBAL_ACTION_QUICK_SETTINGS))
         }
         ActionConfiguration.init(this)
     }
