@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -47,7 +48,9 @@ fun Panel(dismissListener: () -> Unit, actionListener: (Action) -> Unit) {
                 Row(modifier = Modifier.weight(1.0f)) {
                     for (j in 0 until GRID_SIZE) {
                         val action = ActionConfiguration.displayActions[i * GRID_SIZE + j]
-                        ActionItem(action, Modifier.weight(1.0f).clickable { actionListener(action.action) })
+                        ActionItem(action, Modifier.fillMaxHeight().weight(1.0f)
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable { actionListener(action.action) })
                     }
                 }
             }
