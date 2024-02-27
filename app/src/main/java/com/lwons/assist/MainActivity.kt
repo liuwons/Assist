@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
+import com.lwons.assist.settings.SettingsPage
 import com.lwons.assist.ui.theme.AssistTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,17 +29,15 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                    color = MaterialTheme.colorScheme.background) {
+                    SettingsPage()
                 }
             }
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH_CONNECT), REQUEST_BLUETOOTH_PERMISSIONS)
-        }
-
-        if (!PermissionUtils.isAccessibilityServiceEnabled(this)) {
+        } else if (!PermissionUtils.isAccessibilityServiceEnabled(this)) {
             startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
         } else {
             startService(Intent(this, AssistAccessibilityService::class.java))
