@@ -4,22 +4,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.lwons.assist.R
+import com.lwons.assist.action.ActionExecutor
 
 private val panelCustomizers = arrayListOf(
-    PanelCustomizer("NineGridPanel", { /* indicator */ }, { NineGridPanelCustomizer() }),
-    PanelCustomizer("CirclePanel", { /* indicator */ }, { CirclePanelCustomizer() }),
+    PanelCustomizer("NineGridPanel", { Icon(painterResource(id = R.drawable.apps), contentDescription = null) }, { NineGridPanelCustomizer() }),
+    PanelCustomizer("CirclePanel", { Icon(painterResource(id = R.drawable.atr), contentDescription = null) }, { CirclePanelCustomizer() }),
 )
 
 @Composable
-fun PanelAppearance() {
-    Column {
+fun PanelAppearance(dismiss: () -> Unit, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         val selectedPanelCustomizer by remember { mutableStateOf(panelCustomizers.first()) }
 
         Row {
