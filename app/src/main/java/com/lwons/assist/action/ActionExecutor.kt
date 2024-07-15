@@ -2,6 +2,7 @@ package com.lwons.assist.action
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
+import com.lwons.assist.log.Logger
 
 object ActionExecutor {
 
@@ -12,6 +13,7 @@ object ActionExecutor {
     }
 
     fun execute(action: Action) {
+        Logger.i("ActionExecutor", "execute: $action")
         actionImplMap[action]?.execute(action)
     }
 

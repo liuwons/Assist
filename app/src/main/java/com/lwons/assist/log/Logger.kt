@@ -12,19 +12,19 @@ object Logger {
     }
 
     fun i(tag: String, msg: String) {
-        if (level >= LogLevel.INFO) {
+        if (level <= LogLevel.INFO) {
             Log.i(tag, msg)
         }
     }
 
     fun w(tag: String, msg: String) {
-        if (level >= LogLevel.WARN) {
+        if (level <= LogLevel.WARN) {
             Log.w(tag, msg)
         }
     }
 
     fun e(tag: String, msg: String) {
-        if (level >= LogLevel.ERROR) {
+        if (level <= LogLevel.ERROR) {
             Log.e(tag, msg)
         }
     }

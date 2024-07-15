@@ -19,6 +19,7 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.lwons.assist.action.ActionExecutor
+import com.lwons.assist.log.Logger
 import com.lwons.assist.panel.Panel
 import com.lwons.assist.pref.GlobalPreferences
 import com.lwons.assist.widget.BubbleViewImpl
@@ -124,6 +125,7 @@ class AssistAccessibilityService : AccessibilityService(), LifecycleOwner, Saved
             Panel(dismissListener = {
                 hidePanel()
             }, actionListener = { action ->
+                Logger.i("AssistAccessibilityService", "action: $action")
                 hidePanel()
                 ActionExecutor.execute(action)
             })
