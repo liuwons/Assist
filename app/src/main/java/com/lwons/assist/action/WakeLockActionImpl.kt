@@ -23,11 +23,19 @@ class WakeLockActionImpl(private val context: Context): IActionImpl {
             Action.ACTION_KEEP_SCREEN_ON -> {
                 if (st.intValue == 0) {
                     Logger.i(TAG, "acquire wake lock")
-                    wakeLock.acquire()
+                    try {
+                        wakeLock.acquire()
+                    } catch (e: Throwable) {
+                        Logger.e(TAG, "acquire wake lock failed with error: $e")
+                    }
                     st.intValue = 1
                 } else {
                     Logger.i(TAG, "release wake lock")
-                    wakeLock.release()
+                    try {
+                        wakeLock.release()
+                    } catch (e: Throwable) {
+                        Logger.e(TAG, "release wake lock failed with error: $e")
+                    }
                     st.intValue = 0
                 }
             }
